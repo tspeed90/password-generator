@@ -1,2 +1,3 @@
 # password-generator
-An application to easily create generated passwords for your account logins
+
+A React Native application for generating random passwords for websites by website domain.
