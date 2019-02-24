@@ -9,6 +9,7 @@
 
 import React, { Component } from 'react';
 import { Platform, StyleSheet, Text, View } from 'react-native';
+import { Appbar } from 'react-native-paper';
 
 import NewDomain from './src/components/NewDomain';
 
@@ -22,7 +23,14 @@ const instructions = Platform.select({
 type Props = {};
 export default class App extends Component<Props> {
   render() {
-    return <NewDomain />;
+    return (
+      <View>
+        <Appbar>
+          <Appbar.Content title="Password Generator" />
+        </Appbar>
+        <NewDomain />
+      </View>
+    );
   }
 }
 
