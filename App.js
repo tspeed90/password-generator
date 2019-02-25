@@ -8,11 +8,21 @@
  */
 
 import React, { Component } from 'react';
-import { Platform, StyleSheet, Text, View, Keyboard } from 'react-native';
+import {
+  Platform,
+  StyleSheet,
+  Text,
+  View,
+  Keyboard,
+  Dimensions
+} from 'react-native';
 import { Appbar, Snackbar } from 'react-native-paper';
 
 import NewDomain from './src/components/NewDomain';
 import History from './src/components/History';
+
+var height = Dimensions.get('window').height;
+console.log(height);
 
 const instructions = Platform.select({
   ios: 'Press Cmd+R to reload,\n' + 'Cmd+D or shake for dev menu',
@@ -36,12 +46,14 @@ export default class App extends Component<Props> {
 
   render() {
     return (
-      <View>
-        <Appbar>
-          <Appbar.Content title="Password Generator" />
-        </Appbar>
-        <NewDomain alert={this.alertDomain} />
-        <History alert={this.alertDomain} />
+      <View style={{ flex: 1, justifyContent: 'space-between' }}>
+        <View>
+          <Appbar>
+            <Appbar.Content title="Password Generator" />
+          </Appbar>
+          <NewDomain alert={this.alertDomain} />
+          <History alert={this.alertDomain} />
+        </View>
         <Snackbar
           visible={this.state.visible}
           onDismiss={() => this.setState({ visible: false })}

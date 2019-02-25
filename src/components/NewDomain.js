@@ -1,6 +1,6 @@
 import React, { Component } from 'react';
 import { Text, View } from 'react-native';
-import { Button, Card, TextInput, Snackbar } from 'react-native-paper';
+import { Button, Card, TextInput } from 'react-native-paper';
 
 export default class NewDomain extends Component {
   constructor(props) {
@@ -26,6 +26,8 @@ export default class NewDomain extends Component {
               name="domain"
               mode="flat"
               label="Website domain"
+              autoCorrect={false}
+              autoCapitalize="none"
             />
             <Button mode="contained" onPress={this.props.alert}>
               Get New Password

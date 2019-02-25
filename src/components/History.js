@@ -1,6 +1,6 @@
 import React, { Component } from 'react';
 import { Text, View } from 'react-native';
-import { Button, Card, List, Snackbar } from 'react-native-paper';
+import { Button, Card, List } from 'react-native-paper';
 
 export default class History extends Component {
   constructor(props) {
