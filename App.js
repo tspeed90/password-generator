@@ -8,10 +8,11 @@
  */
 
 import React, { Component } from 'react';
-import { Platform, StyleSheet, Text, View } from 'react-native';
-import { Appbar } from 'react-native-paper';
+import { Platform, StyleSheet, Text, View, Keyboard } from 'react-native';
+import { Appbar, Snackbar } from 'react-native-paper';
 
 import NewDomain from './src/components/NewDomain';
+import History from './src/components/History';
 
 const instructions = Platform.select({
   ios: 'Press Cmd+R to reload,\n' + 'Cmd+D or shake for dev menu',
@@ -22,33 +23,33 @@ const instructions = Platform.select({
 
 type Props = {};
 export default class App extends Component<Props> {
+  constructor(props) {
+    super(props);
+    this.state = {
+      visible: false
+    };
+  }
+  alertDomain = () => {
+    Keyboard.dismiss();
+    this.setState(state => ({ visible: !state.visible }));
+  };
+
   render() {
     return (
       <View>
         <Appbar>
           <Appbar.Content title="Password Generator" />
         </Appbar>
-        <NewDomain />
+        <NewDomain alert={this.alertDomain} />
+        <History alert={this.alertDomain} />
+        <Snackbar
+          visible={this.state.visible}
+          onDismiss={() => this.setState({ visible: false })}
+          duration={1000}
+        >
+          Password saved to clipboard!
+        </Snackbar>
       </View>
     );
   }
 }
-
-const styles = StyleSheet.create({
-  container: {
-    flex: 1,
-    justifyContent: 'center',
-    alignItems: 'center',
-    backgroundColor: '#F5FCFF'
-  },
-  welcome: {
-    fontSize: 20,
-    textAlign: 'center',
-    margin: 10
-  },
-  instructions: {
-    textAlign: 'center',
-    color: '#333333',
-    marginBottom: 5
-  }
-});

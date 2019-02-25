@@ -1,6 +1,6 @@
 import React, { Component } from 'react';
 import { Text, View } from 'react-native';
-import { Button, Card, TextInput } from 'react-native-paper';
+import { Button, Card, TextInput, Snackbar } from 'react-native-paper';
 
 export default class NewDomain extends Component {
   constructor(props) {
@@ -10,31 +10,29 @@ export default class NewDomain extends Component {
     };
   }
 
-  alertDomain = () => {
-    alert(this.state.domain);
-  };
-
   render() {
     return (
-      <Card>
-        <Card.Content>
-          <Card.Title
-            title="Generate New Password"
-            style={{ paddingLeft: 0 }}
-          />
-          <Text>Enter the website domain to generate a password.</Text>
-          <TextInput
-            value={this.state.domain}
-            onChangeText={domain => this.setState({ domain })}
-            name="domain"
-            mode="flat"
-            label="Website domain"
-          />
-          <Button mode="contained" onPress={this.alertDomain}>
-            Generate
-          </Button>
-        </Card.Content>
-      </Card>
+      <View>
+        <Card style={{ borderRadius: 0 }}>
+          <Card.Content>
+            <Card.Title
+              title="Generate New Password"
+              style={{ paddingLeft: 0 }}
+            />
+            <Text>Enter the website domain to generate a password.</Text>
+            <TextInput
+              value={this.state.domain}
+              onChangeText={domain => this.setState({ domain })}
+              name="domain"
+              mode="flat"
+              label="Website domain"
+            />
+            <Button mode="contained" onPress={this.props.alert}>
+              Get New Password
+            </Button>
+          </Card.Content>
+        </Card>
+      </View>
     );
   }
 }
