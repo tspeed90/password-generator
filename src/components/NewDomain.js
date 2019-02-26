@@ -29,7 +29,12 @@ export default class NewDomain extends Component {
               autoCorrect={false}
               autoCapitalize="none"
             />
-            <Button mode="contained" onPress={this.props.alert}>
+            <Button
+              mode="contained"
+              onPress={() => {
+                this.props.alert(this.state.domain);
+              }}
+            >
               Get New Password
             </Button>
           </Card.Content>
