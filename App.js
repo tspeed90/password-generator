@@ -13,6 +13,7 @@ import { Appbar, Snackbar } from 'react-native-paper';
 
 import NewDomain from './src/components/NewDomain';
 import History from './src/components/History';
+import generatePassword from './src/utils/generatePassword';
 
 type Props = {};
 export default class App extends Component<Props> {
@@ -26,12 +27,13 @@ export default class App extends Component<Props> {
 
   alertDomain = domain => {
     Keyboard.dismiss();
-    this.setState(state => ({ visible: !state.visible, domain: domain }));
-    Clipboard.setString(domain);
+    this.setState(state => ({ visible: !state.visible }));
+    Clipboard.setString(
+      generatePassword('correct-horse-battery-staple', domain)
+    );
   };
 
   render() {
-    const { domain } = this.state;
     return (
       <View style={{ flex: 1, justifyContent: 'space-between' }}>
         <View>
