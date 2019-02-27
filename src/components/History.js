@@ -15,15 +15,15 @@ export default class History extends Component {
             <Card.Title title="History" style={{ paddingLeft: 0 }} />
             <List.Section>
               <List.Item
-                title="amazon.com"
+                title="amazon.co.uk"
                 onPress={() => {
-                  this.props.alert('amazon.com');
+                  this.props.savePassword('amazon.co.uk');
                 }}
               />
               <List.Item
                 title="instagram.com"
                 onPress={() => {
-                  this.props.alert('instagram.com');
+                  this.props.savePassword('instagram.com');
                 }}
               />
             </List.Section>

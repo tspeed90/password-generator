@@ -25,12 +25,16 @@ export default class App extends Component<Props> {
     };
   }
 
-  alertDomain = domain => {
+  // TODO: History is currently working improperly by using a false master password. Will need to pass the input from
+  // NewDomain to
+  savePasswordToClipboard = domain => {
     Keyboard.dismiss();
     this.setState(state => ({ visible: !state.visible }));
-    Clipboard.setString(
-      generatePassword('correct-horse-battery-staple', domain)
-    );
+    Clipboard.setString(generatePassword(this.state.masterPassword, domain));
+  };
+
+  updatePasswordInState = password => {
+    this.setState(state => ({ masterPassword: password }));
   };
 
   render() {
@@ -40,8 +44,11 @@ export default class App extends Component<Props> {
           <Appbar>
             <Appbar.Content title="Password Generator" />
           </Appbar>
-          <NewDomain alert={this.alertDomain} />
-          <History alert={this.alertDomain} />
+          <NewDomain
+            savePassword={this.savePasswordToClipboard}
+            updateState={this.updatePasswordInState}
+          />
+          <History savePassword={this.savePasswordToClipboard} />
         </View>
         <Snackbar
           visible={this.state.visible}

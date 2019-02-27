@@ -6,7 +6,8 @@ export default class NewDomain extends Component {
   constructor(props) {
     super(props);
     this.state = {
-      domain: null
+      domain: null,
+      masterPassword: null
     };
   }
 
@@ -19,7 +20,20 @@ export default class NewDomain extends Component {
               title="Generate New Password"
               style={{ paddingLeft: 0 }}
             />
-            <Text>Enter the website domain to generate a password.</Text>
+            <Text>Enter your master password.</Text>
+            <TextInput
+              value={this.state.masterPassword}
+              onChangeText={masterPassword => {
+                this.props.updateState(masterPassword);
+              }}
+              name="password"
+              mode="flat"
+              label="Master password"
+              autoCorrect={false}
+              autoCapitalize="none"
+              secureTextEntry={true}
+            />
+            <Text>Enter the website domain.</Text>
             <TextInput
               value={this.state.domain}
               onChangeText={domain => this.setState({ domain })}
@@ -32,7 +46,7 @@ export default class NewDomain extends Component {
             <Button
               mode="contained"
               onPress={() => {
-                this.props.alert(this.state.domain);
+                this.props.savePassword(this.state.domain);
               }}
             >
               Get New Password
