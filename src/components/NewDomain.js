@@ -1,6 +1,9 @@
 import React, { Component } from 'react';
 import { Text, View } from 'react-native';
 import { Button, Card, TextInput } from 'react-native-paper';
+import firebase from 'react-native-firebase';
+
+const database = firebase.database();
 
 export default class NewDomain extends Component {
   constructor(props) {
@@ -24,6 +27,7 @@ export default class NewDomain extends Component {
             <TextInput
               value={this.state.masterPassword}
               onChangeText={masterPassword => {
+                this.setState({ masterPassword });
                 this.props.updateState(masterPassword);
               }}
               name="password"
@@ -36,7 +40,9 @@ export default class NewDomain extends Component {
             <Text>Enter the website domain.</Text>
             <TextInput
               value={this.state.domain}
-              onChangeText={domain => this.setState({ domain })}
+              onChangeText={domain => {
+                this.setState({ domain });
+              }}
               name="domain"
               mode="flat"
               label="Website domain"
@@ -46,7 +52,9 @@ export default class NewDomain extends Component {
             <Button
               mode="contained"
               onPress={() => {
+                database.ref('sites/').push(this.state.domain);
                 this.props.savePassword(this.state.domain);
+                this.setState({ masterPassword: '', domain: '' });
               }}
             >
               Get New Password
