@@ -31,9 +31,9 @@ export default class History extends Component {
               {history &&
                 history.map(site => (
                   <List.Item
-                    title={site}
+                    title={site.domain}
                     onPress={() => {
-                      this.props.savePassword(site);
+                      this.props.savePassword(site.domain);
                     }}
                   />
                 ))}

@@ -52,7 +52,11 @@ export default class NewDomain extends Component {
             <Button
               mode="contained"
               onPress={() => {
-                database.ref('sites').push(this.state.domain);
+                database.ref('sites').push({
+                  domain: this.state.domain,
+                  useCount: 1,
+                  lastAccessed: new Date()
+                });
                 this.props.savePassword(this.state.domain);
                 this.setState({ masterPassword: '', domain: '' });
               }}
