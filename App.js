@@ -10,10 +10,13 @@
 import React, { Component } from 'react';
 import { View, Keyboard, Clipboard } from 'react-native';
 import { Appbar, Snackbar } from 'react-native-paper';
+import firebase from 'react-native-firebase';
 
 import NewDomain from './src/components/NewDomain';
 import History from './src/components/History';
 import generatePassword from './src/utils/generatePassword';
+
+const database = firebase.database();
 
 type Props = {};
 export default class App extends Component<Props> {
@@ -21,8 +24,19 @@ export default class App extends Component<Props> {
     super(props);
     this.state = {
       visible: false,
-      domain: null
+      domain: null,
+      history: null
     };
+  }
+
+  componentDidMount() {
+    database.ref('sites').on('value', snapshot => {
+      if (snapshot.val()) {
+        this.setState({ history: Object.values(snapshot.val()) });
+      } else {
+        this.setState({ history: [] });
+      }
+    });
   }
 
   // TODO: History is currently working improperly by using a false master password. Will need to pass the input from
@@ -38,6 +52,7 @@ export default class App extends Component<Props> {
   };
 
   render() {
+    const { history } = this.state;
     return (
       <View style={{ flex: 1, justifyContent: 'space-between' }}>
         <View>
@@ -47,8 +62,12 @@ export default class App extends Component<Props> {
           <NewDomain
             savePassword={this.savePasswordToClipboard}
             updateState={this.updatePasswordInState}
+            history={history}
           />
-          <History savePassword={this.savePasswordToClipboard} />
+          <History
+            history={history}
+            savePassword={this.savePasswordToClipboard}
+          />
         </View>
         <Snackbar
           visible={this.state.visible}

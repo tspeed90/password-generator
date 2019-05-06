@@ -15,6 +15,8 @@ export default class NewDomain extends Component {
   }
 
   render() {
+    const { history } = this.props;
+    const { domain } = this.state;
     return (
       <View>
         <Card style={{ borderRadius: 0 }}>
@@ -39,7 +41,7 @@ export default class NewDomain extends Component {
             />
             <Text>Enter the website domain.</Text>
             <TextInput
-              value={this.state.domain}
+              value={domain}
               onChangeText={domain => {
                 this.setState({ domain });
               }}
@@ -52,12 +54,21 @@ export default class NewDomain extends Component {
             <Button
               mode="contained"
               onPress={() => {
-                database.ref('sites').push({
-                  domain: this.state.domain,
-                  useCount: 1,
-                  lastAccessed: new Date()
-                });
-                this.props.savePassword(this.state.domain);
+                const domainIndex = history
+                  .map(site => site.domain)
+                  .indexOf(domain);
+                if (domainIndex === -1) {
+                  database.ref('sites').push({
+                    domain: domain,
+                    useCount: 1,
+                    lastAccessed: new Date().toISOString()
+                  });
+                } else {
+                  history[domainIndex].useCount++;
+                  history[domainIndex].lastAccessed = new Date().toISOString();
+                  database.ref('sites').set(history);
+                }
+                this.props.savePassword(domain);
                 this.setState({ masterPassword: '', domain: '' });
               }}
             >
